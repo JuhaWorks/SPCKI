@@ -1,0 +1,55 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Build outputs
+dist/
+build/
+client/dist/
+server/dist/
+
+# Environment files — NEVER commit these
+.env
+.env.*
+!.env.example
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editor
+.vscode/
+*.swp
+*.swo
+.idea/
+
+# Test coverage
+coverage/
+*.lcov
+
+# Temp
+*.tmp
+*.temp
+
+# Docker
+*.pid
+
+# Backups (handled by backup scripts)
+backups/
+
+# TypeScript build info
+*.tsbuildinfo
+
+# Playwright
+playwright-report/
+test-results/
+
+# k6
+k6-results/
