@@ -17,11 +17,6 @@
     "pern:build": "npm run build --prefix pern",
     "pern:test": "npm run test --prefix pern",
     "pern:lint": "npm run lint --prefix pern",
-    "oracle:status": "node oracle-apex/oracle-cli.cjs status",
-    "oracle:tables": "node oracle-apex/oracle-cli.cjs tables",
-    "oracle:cli": "node oracle-apex/oracle-cli.cjs repl",
-    "oracle:mcp": "node oracle-apex/server.cjs",
-    "oracle:test": "node oracle-apex/test-conn.cjs",
     "prepare": "husky"
   },
   "devDependencies": {

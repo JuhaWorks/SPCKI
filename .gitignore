@@ -53,3 +53,19 @@ test-results/
 
 # k6
 k6-results/
+
+# Oracle APEX (kept strictly local)
+oracle-apex/
+
+# PDF files
+*.pdf
+
+# Agent configs
+.agents/
+
+# Root reference documents (kept locally)
+BEXIMCO.md
+SPCKI System Report.md
+SPCKI_Formal_Report.html
+SPCKI_PERN_Build_Prompt.md
+SPCKI_Sample_Dataset.xlsx

@@ -1,109 +1,114 @@
-# SPCKI Digital Monitoring Platform
+# SPCKI Digital Monitoring Platform – PERN Stack
 
-**Smart Solar Powered Communal Kitchen Initiative (SPCKI)**  
+**Solar Powered Community Kitchen Initiative (SPCKI)**  
 Beximco Solar-Powered Communal Kitchen Monitoring & Governance System
 
 ---
 
 ## 🏗️ Project Architecture
 
-This repository is organized into two completely separated, self-contained sub-systems to maintain a pristine directory structure:
-
 ```
 SPCKI/
-├── pern/                   # 🌐 PERN Stack Web Application
-│   ├── client/             # React + Vite + TailwindCSS + PWA frontend
-│   ├── server/             # Express.js + PostgreSQL API backend & business rules
-│   ├── deploy/             # Docker, Nginx, and deployment configurations
-│   ├── docs/               # System reports, runbooks, and PostgreSQL schema
-│   ├── package.json        # Dedicated PERN workspace orchestrator
-│   └── .env                # PERN environment variables
+├── pern/                             # 🌐 PERN Stack Platform Core
+│   ├── client/                       # React 19 + Vite + TailwindCSS + PWA frontend
+│   │   ├── src/
+│   │   │   ├── api/                  # Axios HTTP client & API services
+│   │   │   ├── components/           # Shared UI & navigation layout
+│   │   │   ├── features/             # Domain modules (Dashboard, Kitchens, Sessions, Logs)
+│   │   │   ├── offline/              # Offline-first queue & IndexedDB sync engine
+│   │   │   ├── App.jsx               # Application root & routing
+│   │   │   └── main.jsx              # Client entry point
+│   │   ├── package.json
+│   │   └── vite.config.js            # Vite build & Service Worker PWA config
+│   │
+│   ├── server/                       # Express.js + PostgreSQL backend API
+│   │   ├── src/
+│   │   │   ├── db/                   # Connection pool, migrations, and seeds
+│   │   │   ├── middleware/           # JWT auth, role RBAC, CSRF, security headers
+│   │   │   ├── routes/               # REST API endpoints (auth, kitchens, sessions, logs, dashboard)
+│   │   │   ├── utils/                # KPI formulas, tokens, audit logging
+│   │   │   ├── app.js                # Express app definition
+│   │   │   └── server.js             # HTTP server bootstrap
+│   │   ├── tests/                    # Vitest unit, API, and security test suites
+│   │   ├── package.json
+│   │   └── vitest.config.js
+│   │
+│   ├── deploy/                       # Deployment infrastructure
+│   │   ├── backup/                   # Automated database backups
+│   │   ├── environments/             # Environment configs (dev, staging, prod)
+│   │   └── nginx/                    # Reverse proxy configs
+│   │
+│   ├── docs/                         # Specifications & PostgreSQL reference schema
+│   │   ├── ASSUMPTIONS.md
+│   │   ├── RUNBOOK.md
+│   │   ├── SECURITY.md
+│   │   ├── SPCKI_System_Report.md
+│   │   └── spcki_schema.sql          # Clean PostgreSQL schema
+│   │
+│   ├── spcki_schema.sql              # Clean PostgreSQL reference DDL
+│   ├── package.json                  # Workspace monorepo definition
+│   └── package-lock.json
 │
-├── oracle-apex/            # 🏛️ Oracle 19c & APEX Platform
-│   ├── spcki_all_plsql_packages.sql  # Master Oracle 19c PL/SQL packages & triggers
-│   ├── spcki_oracle_apex_schema.sql  # Complete Oracle DDL schema
-│   ├── app100_export.sql             # Oracle APEX 20.1/24.2 App 100 export
-│   ├── server.cjs                    # Oracle Database & APEX MCP Server
-│   ├── oracle-cli.cjs                # Interactive Oracle SQL CLI & REPL
-│   ├── deploy-*.cjs                  # Automation & deployment scripts
-│   └── package.json                  # Oracle toolchain dependencies
-│
-├── .agents/                # Antigravity IDE agent configuration & MCP integration
-├── .github/                # GitHub Actions CI/CD workflows
-├── package.json            # Top-level workspace script proxy
-└── README.md               # Repository documentation
+├── .github/                          # GitHub Actions CI/CD workflows
+├── package.json                      # Workspace script runner
+└── README.md                         # Documentation
 ```
 
 ---
 
 ## 🚀 Quick Start
 
-### 1. PERN Stack (PostgreSQL · Express · React · Node.js)
+### 1. Prerequisites
+- **Node.js** >= 20.0.0
+- **PostgreSQL** >= 14
+- **npm** >= 9.0.0
 
-To run the web application locally:
-
+### 2. Environment Configuration
+Copy `.env.example` in `pern/` to `.env` and configure your credentials:
 ```bash
-# Navigate to the PERN directory
-cd pern
+cp pern/.env.example pern/.env
+```
 
-# Install dependencies (if not already installed)
-npm install
+### 3. Install Dependencies
+```bash
+# Install from root (or within pern/)
+npm --prefix pern install
+```
 
-# Start both backend API (port 3000) and frontend client (port 5173)
+### 4. Database Migrations & Seeds
+```bash
+npm --prefix pern run migrate --workspace=server
+npm --prefix pern run seed --workspace=server
+```
+
+### 5. Running the Application
+Run both backend API and frontend client concurrently:
+```bash
 npm run dev
+```
+- **Backend API**: `http://localhost:3000`
+- **Frontend Client**: `http://localhost:5173`
 
-# Run unit and integration tests
+---
+
+## 🧪 Testing & Quality Assurance
+
+All test suites and linting are automated:
+
+```bash
+# Run unit, integration, and security tests
 npm test
 
-# Run linter
+# Run code style & security linting
 npm run lint
-```
 
-*Or run directly from repository root via proxy commands:*
-```bash
-npm run pern:dev
-npm run pern:test
+# Build production client bundle
+npm run build
 ```
 
 ---
 
-### 2. Oracle 19c & Oracle APEX
-
-The `oracle-apex/` directory contains all Oracle 19c Enterprise Edition database assets, PL/SQL packages, and the APEX application suite:
-
-```bash
-# Navigate to Oracle APEX directory
-cd oracle-apex
-
-# Test database connection
-npm test
-
-# Check system status
-npm run status
-
-# Launch interactive SQL REPL
-npm run cli
-
-# Re-compile master PL/SQL packages
-npm run compile:plsql
-```
-
-#### Oracle MCP Server (Antigravity Integration)
-The Oracle MCP server exposes database inspection, APEX metadata, and PL/SQL execution tools directly to Antigravity IDE:
-```bash
-node oracle-apex/server.cjs
-```
-Configured in: `.agents/mcp_config.json` & `~/.gemini/config/mcp_config.json`.
-
----
-
-## 📋 Technology Stacks Summary
-
-| Component | PERN Stack (`pern/`) | Oracle APEX Stack (`oracle-apex/`) |
-| :--- | :--- | :--- |
-| **Database** | PostgreSQL 16+ | Oracle 19c Enterprise Edition |
-| **Backend** | Express.js / Node.js 20+ | PL/SQL Packages (`SPCKI_KPI_PKG`, `SPCKI_OPS_PKG`, `SPCKI_AUTH_PKG`) |
-| **Frontend UI** | React 19 + Vite (Offline PWA) | Oracle APEX 20.1 / 24.2 (App 100) |
-| **Styling** | Modern TailwindCSS / Custom Design | APEX Universal Theme (Theme 42) + Custom CSS |
-| **Testing** | Vitest + Coverage | Oracle validation & compilation suites |
-| **CI/CD** | GitHub Actions (`.github/workflows/ci.yml`) | Automated JS/PL/SQL deployment scripts |
+## 🔒 Security Architecture
+- **JWT Authentication**: Short-lived access tokens with rotating refresh tokens and automatic family revocation upon reuse.
+- **RBAC**: Role-based access control protecting all administrative endpoints.
+- **Defense in Depth**: Parameterized queries, CSRF validation, Content Security Policy (CSP), rate limiting, and password hashing with Argon2id.
