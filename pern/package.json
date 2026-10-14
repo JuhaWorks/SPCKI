@@ -19,22 +19,7 @@
   },
   "devDependencies": {
     "@vitest/coverage-v8": "^5.0.3",
-    "husky": "^9.1.7",
-    "lint-staged": "^17.6.0",
     "vitest": "^5.0.3"
-  },
-  "lint-staged": {
-    "server/**/*.{js,jsx}": [
-      "eslint -c server/eslint.config.js --fix",
-      "prettier --write"
-    ],
-    "client/**/*.{js,jsx}": [
-      "eslint -c client/eslint.config.js --fix",
-      "prettier --write"
-    ],
-    "**/*.{json,md,yml,yaml}": [
-      "prettier --write"
-    ]
   },
   "engines": {
     "node": ">=20.0.0",
