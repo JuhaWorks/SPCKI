@@ -1,0 +1,55 @@
+
+BEGIN
+  htp.p('<div style="margin-top:24px; margin-bottom:44px;">');
+  htp.p('  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; padding-bottom:12px; border-bottom:1px solid #e2e8f0;">');
+  htp.p('    <span style="font-size:1.35rem; font-weight:800; color:#0f172a;">Recent Cooking Sessions</span>');
+  htp.p('    <div style="display:flex; align-items:center; gap:16px;">');
+  htp.p('      <span style="font-size:0.92rem; color:#64748b; font-weight:600;">Sorted: Latest sessions first</span>');
+  htp.p('      <a href="f?p=' || v('APP_ID') || ':2:' || v('APP_SESSION') || ':::" style="font-size:0.96rem; font-weight:700; color:#2563eb; text-decoration:none;">View all sessions &rarr;</a>');
+  htp.p('    </div>');
+  htp.p('  </div>');
+  htp.p('  <div style="overflow-x:auto; background:#ffffff; border:1px solid #cbd5e1; border-radius:10px;">');
+  htp.p('    <table style="width:100%; border-collapse:collapse; font-size:1.02rem;">');
+  htp.p('      <thead><tr style="background:#f1f5f9; border-bottom:2px solid #cbd5e1; text-align:left;">');
+  htp.p('        <th style="padding:16px 20px; font-size:0.88rem; font-weight:800; text-transform:uppercase; letter-spacing:0.05em; color:#334155;">ID</th>');
+  htp.p('        <th style="padding:16px 20px; font-size:0.88rem; font-weight:800; text-transform:uppercase; letter-spacing:0.05em; color:#334155;">Household</th>');
+  htp.p('        <th style="padding:16px 20px; font-size:0.88rem; font-weight:800; text-transform:uppercase; letter-spacing:0.05em; color:#334155;">Date</th>');
+  htp.p('        <th style="padding:16px 20px; font-size:0.88rem; font-weight:800; text-transform:uppercase; letter-spacing:0.05em; color:#334155;">Appliance</th>');
+  htp.p('        <th style="padding:16px 20px; font-size:0.88rem; font-weight:800; text-transform:uppercase; letter-spacing:0.05em; color:#334155;">Power Source</th>');
+  htp.p('        <th style="padding:16px 20px; font-size:0.88rem; font-weight:800; text-transform:uppercase; letter-spacing:0.05em; color:#334155; text-align:right;">Persons</th>');
+  htp.p('        <th style="padding:16px 20px; font-size:0.88rem; font-weight:800; text-transform:uppercase; letter-spacing:0.05em; color:#334155; text-align:right;">Duration</th>');
+  htp.p('        <th style="padding:16px 20px; font-size:0.88rem; font-weight:800; text-transform:uppercase; letter-spacing:0.05em; color:#334155; text-align:right;">Energy</th>');
+  htp.p('        <th class="spcki-edit-btn" style="padding:16px 20px; font-size:0.88rem; font-weight:800; text-transform:uppercase; letter-spacing:0.05em; color:#334155; text-align:center;">Action</th>');
+  htp.p('      </tr></thead><tbody>');
+
+  FOR r IN (
+    SELECT s.id, h.household_code, to_char(trunc(cast(s.start_at as date)), 'YYYY-MM-DD') AS s_date,
+           a.name AS appliance, s.power_source, s.persons_cooked_for, s.duration_min,
+           round(a.power_kw * s.duration_min / 60.0 * 0.75, 2) AS energy_kwh
+    FROM cooking_sessions s
+    JOIN households h ON h.id = s.household_id
+    JOIN appliances a ON a.id = s.appliance_id
+    ORDER BY s.id DESC
+    FETCH FIRST 15 ROWS ONLY
+  ) LOOP
+    htp.p('<tr style="border-bottom:1px solid #f1f5f9; transition:background 0.15s ease;">');
+    htp.p('  <td style="padding:15px 20px; color:#64748b; font-weight:700; font-size:0.95rem;">#' || r.id || '</td>');
+    htp.p('  <td style="padding:15px 20px; font-weight:800; color:#0f172a;">' || r.household_code || '</td>');
+    htp.p('  <td style="padding:15px 20px; color:#475569; font-weight:600;">' || r.s_date || '</td>');
+    htp.p('  <td style="padding:15px 20px; color:#1e293b; font-weight:600;">' || r.appliance || '</td>');
+    htp.p('  <td style="padding:15px 20px;"><span style="display:inline-block; padding:4px 12px; border-radius:5px; font-size:0.88rem; font-weight:700; background:' ||
+          CASE r.power_source
+            WHEN 'Solar' THEN '#fffbeb; color:#92400e;'
+            WHEN 'Battery' THEN '#eff6ff; color:#1e40af;'
+            ELSE '#fef2f2; color:#991b1b;'
+          END || '">' || r.power_source || '</span></td>');
+    htp.p('  <td style="padding:15px 20px; text-align:right; color:#1e293b; font-weight:600;">' || r.persons_cooked_for || '</td>');
+    htp.p('  <td style="padding:15px 20px; text-align:right; color:#1e293b; font-weight:600;">' || r.duration_min || ' min</td>');
+    htp.p('  <td style="padding:15px 20px; text-align:right; font-weight:800; color:#0f172a;">' || to_char(r.energy_kwh, '990.00') || ' kWh</td>');
+    htp.p('  <td class="spcki-edit-btn" style="padding:15px 20px; text-align:center;">' ||
+          '<a href="' || apex_util.prepare_url('f?p=' || v('APP_ID') || ':12:' || v('APP_SESSION') || '::NO:12:P12_ID:' || r.id) || '" style="display:inline-block; padding:6px 16px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.9rem; font-weight:700; color:#0f172a; text-decoration:none; background:#ffffff; transition:all 0.15s ease;">Edit</a></td>');
+    htp.p('</tr>');
+  END LOOP;
+
+  htp.p('</tbody></table></div></div>');
+END;

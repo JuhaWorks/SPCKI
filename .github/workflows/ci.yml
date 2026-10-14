@@ -51,19 +51,25 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
+        working-directory: pern
         run: npm ci
 
       - name: Lint – Server
+        working-directory: pern
         run: npm run lint --workspace=server
 
       - name: Lint – Client
+        working-directory: pern
         run: npm run lint --workspace=client
 
       - name: Test – Server
+        working-directory: pern
         run: npm run test --workspace=server
 
       - name: Test – Client
+        working-directory: pern
         run: npm run test --workspace=client
 
       - name: Security audit
+        working-directory: pern
         run: npm audit --audit-level=high

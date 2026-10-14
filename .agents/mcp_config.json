@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "oracle-db": {
+      "command": "node",
+      "args": [
+        "c:\\Users\\asus\\Downloads\\SPCKI\\oracle-apex\\server.cjs"
+      ],
+      "env": {
+        "ORACLE_USER": "solar_cook",
+        "ORACLE_PASSWORD": "solar_cook",
+        "ORACLE_CONNECT_STRING": "202.84.45.58:1521/bexibank",
+        "ORACLE_CLIENT_LIB_DIR": "E:\\app\\client\\asus\\product\\19.0.0\\client_1\\bin",
+        "APEX_WORKSPACE": "SOLAR_COOK",
+        "APEX_URL": "http://202.84.45.58:8999/bkb"
+      }
+    }
+  }
+}

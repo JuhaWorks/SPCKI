@@ -1,0 +1,466 @@
+
+<!-- Multi-CDN High-Availability Chart.js Engine -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+if (typeof Chart === 'undefined') {
+  document.write('<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>');
+}
+</script>
+
+<style>
+/* ==========================================================================
+   SPCKI PLATFORM - HIGH-VISIBILITY & ACCESSIBLE ENTERPRISE THEME
+   Bigger text, high contrast, clean line dividers, actor role-gated UI
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --spcki-font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --spcki-bg: #f8fafc;
+  --spcki-surface: #ffffff;
+  --spcki-border: #e2e8f0;
+  --spcki-text-main: #0f172a;
+  --spcki-text-body: #1e293b;
+  --spcki-text-muted: #64748b;
+  --spcki-primary: #0f172a;
+}
+
+body, .t-Body, .t-PageBody, .t-Dialog-body {
+  font-family: var(--spcki-font) !important;
+  background-color: var(--spcki-bg) !important;
+  color: var(--spcki-text-body) !important;
+  font-size: 17px !important;
+  line-height: 1.6 !important;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: -0.01em;
+}
+
+/* 1. Header Branding & Profile */
+.t-Header-branding {
+  background: #0f172a !important;
+  border-bottom: 1px solid #1e293b !important;
+  box-shadow: none !important;
+  padding: 0 24px !important;
+}
+
+.t-Header-logo-link {
+  color: #f8fafc !important;
+  font-weight: 800 !important;
+  font-size: 1.25rem !important;
+  letter-spacing: -0.02em !important;
+}
+
+.t-Header-nav .t-Button, 
+.t-Header-nav .t-Button--navBar, 
+.t-Header .t-Button--navBar {
+  color: #cbd5e1 !important;
+  font-size: 0.96rem !important;
+  font-weight: 600 !important;
+}
+
+/* 2. Side Navigation */
+.t-TreeNav {
+  background: #0f172a !important;
+  border-right: 1px solid #1e293b !important;
+}
+
+.t-TreeNav .a-TreeView-node--topLevel > .a-TreeView-content {
+  color: #94a3b8 !important;
+  font-weight: 600 !important;
+  font-size: 1.02rem !important;
+  border-radius: 6px !important;
+  margin: 3px 8px !important;
+  padding: 12px 18px !important;
+  transition: all 0.15s ease !important;
+}
+
+.t-TreeNav .a-TreeView-node--topLevel > .a-TreeView-content:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+}
+
+.t-TreeNav .a-TreeView-node--topLevel.is-current > .a-TreeView-content {
+  background: #1e293b !important;
+  color: #38bdf8 !important;
+  font-weight: 700 !important;
+}
+
+/* 3. Universal Button & Inputs */
+.t-Button {
+  font-family: var(--spcki-font) !important;
+  font-size: 0.96rem !important;
+  font-weight: 600 !important;
+  border-radius: 6px !important;
+  box-shadow: none !important;
+  padding: 10px 20px !important;
+  transition: all 0.15s ease !important;
+}
+
+.t-Button--primary, .t-Button--hot {
+  background: var(--spcki-primary) !important;
+  color: #ffffff !important;
+  border: 1px solid var(--spcki-primary) !important;
+}
+
+.t-Form-inputContainer input, 
+.t-Form-inputContainer select, 
+.t-Form-inputContainer textarea {
+  border-radius: 6px !important;
+  border: 1px solid var(--spcki-border) !important;
+  padding: 12px 16px !important;
+  font-size: 1.05rem !important;
+  color: var(--spcki-text-main) !important;
+}
+
+.t-Form-label {
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  color: #334155 !important;
+}
+
+/* 4. High-Visibility Tables & Reports */
+.t-Region {
+  border: none !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  margin-bottom: 28px !important;
+}
+
+.t-Region-header {
+  border-bottom: 1px solid var(--spcki-border) !important;
+  padding: 18px 0 !important;
+  background: transparent !important;
+}
+
+.t-Region-title {
+  font-size: 1.35rem !important;
+  font-weight: 800 !important;
+  color: var(--spcki-text-main) !important;
+}
+
+.t-Report-report, .a-IRR-table {
+  border: none !important;
+  width: 100% !important;
+  background: #ffffff !important;
+  border-collapse: collapse !important;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,0.02) !important;
+}
+
+.t-Report-report th, .a-IRR-header {
+  background: #f1f5f9 !important;
+  color: #334155 !important;
+  font-size: 0.9rem !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  padding: 16px 20px !important;
+  border-top: 1px solid var(--spcki-border) !important;
+  border-bottom: 2px solid var(--spcki-border) !important;
+  border-left: none !important;
+  border-right: none !important;
+}
+
+.t-Report-report td, .a-IRR-data {
+  padding: 16px 20px !important;
+  font-size: 1.02rem !important;
+  color: #0f172a !important;
+  font-weight: 500 !important;
+  border-top: none !important;
+  border-bottom: 1px solid #f1f5f9 !important;
+  border-left: none !important;
+  border-right: none !important;
+}
+
+.t-Report-report tr:hover td, .a-IRR-table tbody tr:hover td {
+  background: #f8fafc !important;
+}
+
+/* 5. Floating Toast Notification Banner */
+#spcki-toast-container {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 9999999;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  pointer-events: none;
+}
+
+.spcki-toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  min-width: 360px;
+  max-width: 480px;
+  background: #ffffff;
+  color: #0f172a;
+  border-left: 6px solid #10b981;
+  border-top: 1px solid #e2e8f0;
+  border-right: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 18px 22px;
+  box-shadow: 0 16px 32px -4px rgba(0, 0, 0, 0.12), 0 4px 8px -2px rgba(0, 0, 0, 0.06);
+  animation: spckiSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.spcki-toast.fade-out {
+  opacity: 0;
+  transform: translateY(-12px);
+}
+
+@keyframes spckiSlideIn {
+  from { opacity: 0; transform: translateY(-16px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.spcki-toast-icon {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  color: #10b981;
+  margin-top: 2px;
+}
+
+.spcki-toast-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #065f46;
+  margin-bottom: 4px;
+}
+
+.spcki-toast-msg {
+  font-size: 0.95rem;
+  color: #334155;
+  line-height: 1.45;
+}
+
+.spcki-toast-close {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 2px;
+  font-size: 1.2rem;
+}
+
+/* 6. ACTOR ROLE RESTRICTION RULES */
+body.actor-donor .spcki-act-btn,
+body.actor-donor .spcki-edit-btn,
+body.actor-donor .a-IRR-button,
+body.actor-donor button[data-action="create"],
+body.actor-donor .t-Button--hot {
+  display: none !important;
+}
+
+body.actor-donor .spcki-donor-banner {
+  display: flex !important;
+}
+
+/* 7. RESPONSIVE MOBILE STYLES */
+@media (max-width: 768px) {
+  body {
+    font-size: 15px !important;
+  }
+  .t-Body-contentInner {
+    padding: 12px 14px !important;
+  }
+  .spcki-header-flex {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+  .spcki-kpi-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .spcki-charts-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+</style>
+
+<div id="spcki-toast-container"></div>
+
+<script>
+// ============================================================================
+// GLOBAL JAVASCRIPT ON ALL PAGES:
+// 1. Toast notifications & dialog refresh
+// 2. Real Authenticated Actor detection & navigation/page gating
+// ============================================================================
+(function() {
+  function getJQuery() {
+    return (window.apex && window.apex.jQuery) ? window.apex.jQuery : (window.jQuery || null);
+  }
+
+  // Toast Function
+  window.spckiShowToast = function(msg, title) {
+    title = title || 'Success';
+    msg = msg || 'Action completed successfully.';
+
+    var container = document.getElementById('spcki-toast-container');
+    if (!container) {
+      container = document.createElement('div');
+      container.id = 'spcki-toast-container';
+      document.body.appendChild(container);
+    }
+
+    var toast = document.createElement('div');
+    toast.className = 'spcki-toast';
+    toast.innerHTML = 
+      '<svg class="spcki-toast-icon" viewBox="0 0 20 20" fill="currentColor">' +
+      '  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />' +
+      '</svg>' +
+      '<div class="spcki-toast-body">' +
+      '  <div class="spcki-toast-title">' + title + '</div>' +
+      '  <div class="spcki-toast-msg">' + msg + '</div>' +
+      '</div>' +
+      '<button class="spcki-toast-close" onclick="this.parentElement.remove()" title="Close">&times;</button>';
+
+    container.appendChild(toast);
+
+    setTimeout(function() {
+      toast.classList.add('fade-out');
+      setTimeout(function() {
+        if (toast.parentElement) toast.remove();
+      }, 300);
+    }, 4500);
+  };
+
+  // Flash Toast persistence across reloads
+  try {
+    var flash = sessionStorage.getItem('spcki_flash_toast');
+    if (flash) {
+      sessionStorage.removeItem('spcki_flash_toast');
+      setTimeout(function() { window.spckiShowToast(flash); }, 250);
+    }
+  } catch(e) {}
+
+  // Determine Actor Role from Authenticated User
+  var rawUser = ('&APP_USER.').toLowerCase();
+  var userRole = 'ADMIN';
+
+  if (rawUser === 'field') {
+    userRole = 'FIELD';
+  } else if (rawUser === 'technical') {
+    userRole = 'TECHNICAL';
+  } else if (rawUser === 'viewer' || rawUser === 'donor') {
+    userRole = 'DONOR';
+  } else {
+    userRole = 'ADMIN';
+  }
+
+  // Apply role class to body
+  document.body.classList.add('actor-' + userRole.toLowerCase());
+
+  // Navigation & Page Gating
+  function applyActorGating() {
+    var $ = getJQuery();
+    if (!$) { setTimeout(applyActorGating, 50); return; }
+
+    var path = window.location.href;
+
+    // 1. FIELD USER GATING:
+    // Field user only entries cooking sessions and feedback.
+    if (userRole === 'FIELD') {
+      // If landed on Home (Page 1), redirect to Cooking Sessions (Page 2)
+      if (path.indexOf('/home') !== -1 || path.indexOf(':1:') !== -1) {
+        window.location.href = 'f?p=&APP_ID.:2:&SESSION.:::';
+        return;
+      }
+      // Hide Technical & Generator links in sidebar navigation
+      $('.a-TreeView-label').each(function() {
+        var txt = $(this).text().trim().toLowerCase();
+        if (txt.indexOf('daily technical') !== -1 || txt.indexOf('generator') !== -1) {
+          $(this).closest('.a-TreeView-node').hide();
+        }
+      });
+    }
+
+    // 2. TECHNICAL USER GATING:
+    // Technical user logs solar & generator details.
+    if (userRole === 'TECHNICAL') {
+      // If landed on Home (Page 1), redirect to Daily Technical Logs (Page 5)
+      if (path.indexOf('/home') !== -1 || path.indexOf(':1:') !== -1) {
+        window.location.href = 'f?p=&APP_ID.:5:&SESSION.:::';
+        return;
+      }
+      // Hide Cooking Sessions, Households, Slots, Feedback from navigation
+      $('.a-TreeView-label').each(function() {
+        var txt = $(this).text().trim().toLowerCase();
+        if (txt.indexOf('cooking') !== -1 || txt.indexOf('households') !== -1 || txt.indexOf('feedback') !== -1) {
+          $(this).closest('.a-TreeView-node').hide();
+        }
+      });
+    }
+
+    // 3. DONOR / VIEWER GATING:
+    // Donor can see everything, but read-only without data entry or edits.
+    if (userRole === 'DONOR') {
+      $('.a-IRR-button').hide();
+      $('button[data-action="create"]').hide();
+      $('.spcki-act-btn').hide();
+      $('.spcki-edit-btn').hide();
+    }
+
+    // Update Profile text in header to show the authenticated actor
+    var profileText = $('.t-Header-nav .t-Button--navBar, #t_Menu_profile, .t-Button--navBar').first();
+    var roleBadges = {
+      'ADMIN': '👑 Administrator (' + rawUser + ')',
+      'FIELD': '📋 Field Officer (' + rawUser + ')',
+      'TECHNICAL': '⚡ Technical Specialist (' + rawUser + ')',
+      'DONOR': '👁️ Donor Viewer (' + rawUser + ')'
+    };
+    if (profileText.length) {
+      profileText.html('<span class="fa fa-user-circle" style="margin-right:6px;"></span>' + (roleBadges[userRole] || rawUser));
+    }
+  }
+
+  // Dialog close listener for all pages
+  function initDialogListener() {
+    var $ = getJQuery();
+    if (!$) { setTimeout(initDialogListener, 50); return; }
+
+    $(document).on('apexafterclosedialog', function(e, data) {
+      var msg = 'Record successfully saved.';
+      if (data && data.successMessage) {
+        msg = data.successMessage.text || data.successMessage || msg;
+      }
+      window.spckiShowToast(msg);
+
+      if ($('.a-IRR-table').length > 0) {
+        $('.a-IRR-table').trigger('apexrefresh');
+      }
+
+      if (window.location.href.indexOf('/home') !== -1 || window.location.href.indexOf(':1:') !== -1) {
+        setTimeout(function() {
+          sessionStorage.setItem('spcki_flash_toast', msg);
+          window.location.reload();
+        }, 1200);
+      }
+    });
+
+    if (window.apex && window.apex.message && !window.spckiApexMsgHooked) {
+      window.spckiApexMsgHooked = true;
+      var origShowSuccess = window.apex.message.showPageSuccess;
+      window.apex.message.showPageSuccess = function(msg) {
+        if (origShowSuccess) origShowSuccess.apply(this, arguments);
+        window.spckiShowToast(msg);
+      };
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      applyActorGating();
+      initDialogListener();
+    });
+  } else {
+    applyActorGating();
+    initDialogListener();
+  }
+})();
+</script>

@@ -1,20 +1,27 @@
 {
-  "name": "spcki",
-  "version": "0.1.0",
+  "name": "spcki-workspace",
+  "version": "1.0.0",
   "private": true,
-  "description": "SPCKI Digital Monitoring Platform – PERN Stack",
-  "workspaces": [
-    "server",
-    "client"
-  ],
+  "description": "Smart Solar Powered Communal Kitchen Initiative (SPCKI) – Separated Multi-Stack Workspace",
   "scripts": {
-    "dev": "npm run dev --workspace=server & npm run dev --workspace=client",
-    "dev:server": "npm run dev --workspace=server",
-    "dev:client": "npm run dev --workspace=client",
-    "build": "npm run build --workspace=client",
-    "lint": "npm run lint --workspace=server && npm run lint --workspace=client",
-    "test": "npm run test --workspace=server && npm run test --workspace=client",
-    "audit:check": "npm audit --audit-level=high",
+    "dev": "npm run dev --prefix pern",
+    "dev:server": "npm run dev:server --prefix pern",
+    "dev:client": "npm run dev:client --prefix pern",
+    "build": "npm run build --prefix pern",
+    "lint": "npm run lint --prefix pern",
+    "test": "npm run test --prefix pern",
+    "audit:check": "npm run audit:check --prefix pern",
+    "pern:dev": "npm run dev --prefix pern",
+    "pern:server": "npm run dev:server --prefix pern",
+    "pern:client": "npm run dev:client --prefix pern",
+    "pern:build": "npm run build --prefix pern",
+    "pern:test": "npm run test --prefix pern",
+    "pern:lint": "npm run lint --prefix pern",
+    "oracle:status": "node oracle-apex/oracle-cli.cjs status",
+    "oracle:tables": "node oracle-apex/oracle-cli.cjs tables",
+    "oracle:cli": "node oracle-apex/oracle-cli.cjs repl",
+    "oracle:mcp": "node oracle-apex/server.cjs",
+    "oracle:test": "node oracle-apex/test-conn.cjs",
     "prepare": "husky"
   },
   "devDependencies": {
@@ -24,12 +31,12 @@
     "vitest": "^5.0.3"
   },
   "lint-staged": {
-    "server/**/*.{js,jsx}": [
-      "eslint -c server/eslint.config.js --fix",
+    "pern/server/**/*.{js,jsx}": [
+      "eslint -c pern/server/eslint.config.js --fix",
       "prettier --write"
     ],
-    "client/**/*.{js,jsx}": [
-      "eslint -c client/eslint.config.js --fix",
+    "pern/client/**/*.{js,jsx}": [
+      "eslint -c pern/client/eslint.config.js --fix",
       "prettier --write"
     ],
     "**/*.{json,md,yml,yaml}": [

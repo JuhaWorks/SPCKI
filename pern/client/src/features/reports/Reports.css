@@ -1,0 +1,195 @@
+.reports-container {
+  padding: var(--space-md);
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.export-controls {
+  margin: var(--space-lg) 0;
+  padding: var(--space-md) var(--space-lg);
+  background-color: var(--color-surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.export-controls select {
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  background: var(--color-surface);
+  outline: none;
+  cursor: pointer;
+  min-width: 150px;
+}
+
+.dataset-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-lg);
+}
+
+.dataset-card {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: var(--space-xl);
+  border: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.2s ease;
+}
+
+.dataset-card:hover {
+  border-color: #a3a3a3;
+}
+
+.dataset-card h3 {
+  margin-top: 0;
+  margin-bottom: var(--space-xs);
+  color: var(--color-text);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  font-size: 1.1rem;
+}
+
+.dataset-card p {
+  color: var(--color-text-light);
+  margin-bottom: var(--space-lg);
+  flex-grow: 1;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.btn-export {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.btn-export:hover:not(:disabled) {
+  background-color: var(--color-bg);
+  border-color: var(--color-text);
+}
+
+.btn-export:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.error-message {
+  color: var(--color-error);
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  padding: var(--space-md);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-lg);
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+/* Premium Data Explorer Styles */
+.dataset-tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid var(--color-border);
+}
+
+.dataset-tabs button {
+  background: none;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-text-light);
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.2s ease;
+}
+
+.dataset-tabs button:hover {
+  color: var(--color-primary);
+}
+
+.dataset-tabs button.active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+  font-weight: 600;
+}
+
+.dataset-view {
+  animation: fadeIn 0.3s ease;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+  max-height: 500px;
+}
+
+.premium-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.premium-table th {
+  background: #f8fafc;
+  color: var(--color-text);
+  font-weight: 600;
+  padding: 1rem 1.25rem;
+  border-bottom: 2px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+}
+
+.premium-table td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text);
+  transition: background-color 0.1s ease;
+}
+
+.premium-table tr:hover td {
+  background-color: #f1f5f9;
+}
+
+.premium-table tr:last-child td {
+  border-bottom: none;
+}
+
+.table-footer {
+  padding: 1rem 1.25rem;
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+  background: #f8fafc;
+  border-top: 1px solid var(--color-border);
+  text-align: center;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}

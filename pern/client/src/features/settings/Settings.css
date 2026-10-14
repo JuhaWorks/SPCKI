@@ -1,0 +1,62 @@
+.settings-container {
+  padding: var(--space-lg);
+  display: flex;
+  justify-content: flex-start;
+  max-width: 600px;
+}
+
+.settings-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  padding: var(--space-lg);
+  border-radius: 4px;
+  width: 100%;
+}
+
+.settings-card h2 {
+  margin-top: 0;
+  margin-bottom: var(--space-xs);
+  color: var(--text-main);
+  font-weight: 500;
+  font-size: 1.5rem;
+}
+
+.settings-subtitle {
+  color: var(--text-muted);
+  margin-bottom: var(--space-xl);
+  font-size: 0.9rem;
+}
+
+.settings-group {
+  margin-bottom: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-group label {
+  margin-bottom: var(--space-xs);
+  font-weight: 500;
+  color: var(--text-main);
+  font-size: 0.9rem;
+}
+
+.settings-select {
+  padding: 0.6rem;
+  border: 1px solid var(--border-color);
+  border-radius: 2px;
+  background: var(--bg-main);
+  color: var(--text-main);
+  font-size: 1rem;
+}
+
+.settings-select:disabled {
+  background: var(--bg-surface);
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+.settings-hint {
+  margin-top: var(--space-xs);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
